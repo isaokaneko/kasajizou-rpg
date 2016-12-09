@@ -478,12 +478,8 @@ def sentou(teki):
     tesita.set_colorkey(colorkey,RLEACCEL)
     """
     
-    k2 = pygame.image.load(filename6).convert_alpha()
     
-    b2 = pygame.image.load(filename7).convert_alpha()
-    n2 = pygame.image.load(filename8).convert_alpha()
     waku = pygame.image.load(filename9).convert_alpha()
-    back = pygame.image.load(filename9).convert_alpha()
     akuimage = pygame.image.load(filename13).convert_alpha()
     #x,y = 100, 200
     tesita_x,tesita_y = 400, 200
@@ -553,7 +549,6 @@ def sentou(teki):
         #screen.blit(kou,(60,300))
         #screen.blit(bou,(60,350))
         #screen.blit(nige,(60,400))
-        background2 = [kou,bou,nige]
         pt = 300
         pd = 400
         bg=0
