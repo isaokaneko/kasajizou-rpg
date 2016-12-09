@@ -458,12 +458,6 @@ def sentou(teki):
     filename = []
     flag = 0
     filename="ojizousan2.png"
-    filename3="kougeki.png"
-    filename4="bougyo.png"
-    filename5="nigeru.png"
-    filename6="kougeki2.png"
-    filename7="bougyo2.png"
-    filename8="nigeru2.png"
     filename9="waku2.png"
     filename10="back.png"
     background_image_filename = 'j.png'
@@ -483,10 +477,7 @@ def sentou(teki):
     colorkey = tesita.get_atf((0,0))
     tesita.set_colorkey(colorkey,RLEACCEL)
     """
-    kou = pygame.image.load(filename3).convert_alpha()
     
-    bou = pygame.image.load(filename4).convert_alpha()
-    nige = pygame.image.load(filename5).convert_alpha()
     k2 = pygame.image.load(filename6).convert_alpha()
     
     b2 = pygame.image.load(filename7).convert_alpha()
