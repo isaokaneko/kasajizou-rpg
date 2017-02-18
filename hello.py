@@ -3,6 +3,6 @@ def pu(number):
 
     print("hello"+(number))
 pu("22")
-def su(num):
+def au(num):
     return num * num
 
