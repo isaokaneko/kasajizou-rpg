@@ -10,23 +10,23 @@ filename="ojizousan2.png"
 filename2="tesita2.png"
 background_image_filename = 'j.png'
 basho = []
-mtt = [0,0,0,0]
-
+mtt = []
 mt = []
 list1 = []
 y = 0
 x = 0
 xy = []
-class akudaikan1:
+class Akudaikan:
     def __init__(self):
-        self.name = "Akudaikan"
+        self.name = "悪代官"
         self.hp = 200
         self.mp = 30
         self.tuyosa=20
         self.keikenchiout=1000
         self.job = 1
-        self.xxxx=1
-        self.dead = 1
+        self.boss=1
+        self.dead = 0
+        self.zeni = 1000
     def hit(self,screen,background1,enemy,y):
         f =  int((1 * random.random()))
         enemy.hp -=  (self.tuyosa + f )
@@ -42,6 +42,8 @@ class akudaikan1:
         for text in reversed(list1):
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
+    def taosita():
+        print()
 
 class Jizouclass:
     def __init__(self):
@@ -53,6 +55,7 @@ class Jizouclass:
         self.list1 = []
         self.tttt = 1
         self.level = 1
+        self.zeni =  0
 
 
     def hit(self,screen,background1,enemy,y):
@@ -102,6 +105,7 @@ class Jizouclass:
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
         return list1
+        #t = 1
     def tao3(self,screen,background1,teki,y):
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         font_height = font.get_linesize()
@@ -109,18 +113,21 @@ class Jizouclass:
         print(list1)
         print("CCC")
         list1.append(teki.name + "を倒した ")
+        self.zeni = self.zeni + teki.zeni
+        list1.append(str(self.zeni)+"ゼニーを手に入れた")
         self.keikenchi = self.keikenchi + teki.keikenchiout
+        list1.append(str(self.keikenchi)+"経験値を手に入れた")
+
         for text in reversed(list1):
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
         if teki.dead == 1:
             time.sleep(2)
-            exit()
+            field(basho)
 
         time.sleep(3)
         return list1
 
-        #t = 1
         
         #field(basho)
     def del1(self,list1):
@@ -128,20 +135,20 @@ class Jizouclass:
         print(list1)
 
     def levelup(self,screen,background1,jizou2,enemy,y):
-        if jizou2.keikenchi >= 60 and jizou2.level == 1 and jizou2.keikenchi <=499:
+        if jizou2.keikenchi >= 60 and jizou2.level == 1 and jizou2.keikenchi <=99:
 
             jizou2.maxhp = jizou2.maxhp + int((3 * random.random())) + 10
             jizou2.tuyosa = jizou2.tuyosa +  int((3 * random.random())) + 5
             screen.blit(background1,(0,0))
             pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
             list1.append("地蔵レベルアップ２")
+            jizou2.level=2
             font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
             font_height = font.get_linesize()
             for text in reversed(list1):
                 screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
                 y += font_height
-            jizou2.level=2
-        elif jizou2.keikenchi >= 500 and jizou2.level == 2 and jizou2.keikenchi <= 999:
+        elif jizou2.keikenchi >= 100 and jizou2.level == 2 and jizou2.keikenchi <= 199:
             jizou2.maxhp = jizou2.maxhp + int((3 * random.random())) + 20
             jizou2.tuyosa = jizou2.tuyosa +  int((3 * random.random())) + 10
             screen.blit(background1,(0,0))
@@ -153,7 +160,7 @@ class Jizouclass:
                 screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
                 y += font_height
             jizou2.level=3
-        elif jizou2.keikenchi >= 1000 and jizou2.level == 3:
+        elif jizou2.keikenchi >= 200 and jizou2.level == 3 and jizou2.keikenchi <= 299 :
             jizou2.maxhp = jizou2.maxhp + int((3 * random.random())) + 30
             jizou2.tuyosa = jizou2.tuyosa +  int((3 * random.random())) + 20
             screen.blit(background1,(0,0))
@@ -165,22 +172,21 @@ class Jizouclass:
                 screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
                 y += font_height
             jizou2.level=4
-"""
-    def nigeru(self,screen,background1,y):
-        font = pygame.font.Font(None,32)
-        font_height = font.get_linesize()
-        screen.blit(background1,(0,0))
-        pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
-        print(list1)
-        print("CCC")
-        list1.append("nigeta obbbbbbbbb")
-        for text in reversed(list1):
-            screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
-            y += font_height
-"""
+        elif jizou2.keikenchi >= 300 and jizou2.level == 4 and jizou2.keikenchi < 399:
+            jizou2.maxhp = jizou2.maxhp + int((3 * random.random())) + 50
+            jizou2.tuyosa = jizou2.tuyosa +  int((3 * random.random())) + 30
+            screen.blit(background1,(0,0))
+            pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
+            list1.append("地蔵レベルアップ5")
+            font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
+            font_height = font.get_linesize()
+            for text in reversed(list1):
+                screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
+                y += font_height
+            jizou2.level=5
 jj = Jizouclass() 
 print("#lfskdjklajfdasl" + str(jj.level))
-class tesita1:
+class Tesita:
     def __init__(self):
         self.name = "手下"
         self.hp =20
@@ -188,8 +194,9 @@ class tesita1:
         self.tuyosa =3
         self.keikenchiout=90
         self.job=2
-        self.xxxx=0
+        self.boss=0
         self.dead=0
+        self.zeni=100
     def hit(self,screen,background1,enemy,y):
         pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
         f =  int((1 * random.random()))
@@ -207,7 +214,6 @@ class tesita1:
         for text in reversed(list1):
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
-            """
     def tao2(self,screen,background1,jj,y):
         font = pygame.font.Font(None,32)
         font_height = font.get_linesize()
@@ -224,25 +230,9 @@ class tesita1:
         jj.keikenchi = jj.keikenchi + teki.keikenchiout
         xy = [x,y]
         sss(self,xxx,yyy)
+        """
         
         """
-class Save:
-    """
-    def __init__(self):
-        self.x = x
-        self.y = y
-    def load(self):
-        f = open("save.txt","rb")
-        xy = pickle.load(f)
-        return xy
-    def save(self,xy):
-        f = open("save.txt","wb")
-        pickle.dump(xy2,f)
-
-    f.write(str(self.x))
-    f.write(str(self.y))
-    f.write(str("\n"))
-    """
 class XY():
    ##def __init__(self,x,y):
    def load(self):
@@ -292,6 +282,7 @@ class reset():
         jj.maxhp = 20
         jj.tuyosa = 10
         jj.level = 1
+        jj.zeni =0
         xy = xxxyyy.load
 
 status = Status()
@@ -316,14 +307,7 @@ jj.maxhp = mtt[0]
 jj.tuyosa = mtt[1]
 jj.keikenchi= mtt[2]
 jj.level= mtt[3]
-"""
-if  jj.level == 0:
-    jj.level = 1
-elif jj.level == 1:
-    jj.level = mtt[3]
-else:
-    print("9")
-""" #jj.level = 1
+jj.zeni= mtt[4]
 def mati():
     pygame.init()
     screen = pygame.display.set_mode((640,480),0,32)
@@ -356,7 +340,7 @@ def field(basho):
                 xy = [xxx,yyy]
                 xxxyyy.save(xy)
                 keikei.save(jj.keikenchi)
-                mt = [jj.maxhp,jj.tuyosa,jj.keikenchi,jj.level]
+                mt = [jj.maxhp,jj.tuyosa,jj.keikenchi,jj.level,jj.zeni]
                 status.save(mt)
                 exit()
         if event.type == KEYDOWN:
@@ -372,7 +356,7 @@ def field(basho):
                 xy = [xxx,yyy]
                 xxxyyy.save(xy)
                 keikei.save(jj.keikenchi)
-                mt = [jj.maxhp,jj.tuyosa,jj.keikenchi,jj.level]
+                mt = [jj.maxhp,jj.tuyosa,jj.keikenchi,jj.level,jj.zeni]
                 status.save(mt)
                 exit()
         elif event.type == KEYUP:
@@ -404,13 +388,13 @@ def field(basho):
         else:
             print("")
         if yyy < 100:
-            aku = akudaikan1()
+            aku = Akudaikan()
             sentou(aku)
 
         if xxx > 500:
             basho[0] = xxx + move_x
             basho[1] = yyy + move_y
-            aku = akudaikan1()
+            aku = Akudaikan()
             sentou(aku)
             basho[0] = xxx + move_x - 100
 
@@ -420,7 +404,7 @@ def field(basho):
             #t = 1
             basho[0] = xxx + move_x
             basho[1] = yyy + move_y
-            tesi = tesita1()
+            tesi = Tesita()
             sentou(tesi)
 
             #mini.sentou(basho[0],basho[1])
@@ -436,6 +420,8 @@ def field(basho):
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         text = font.render('Reset', False, (55,205,55))
         screen.blit(text,(420,20))
+        text = font.render("ゼニー"+str(jj.zeni), False, (225,205,55))
+        screen.blit(text,(220,20))
         pressed_mouse = pygame.mouse.get_pressed()
 
         mpos = pygame.mouse.get_pos()
@@ -511,12 +497,6 @@ def sentou(teki):
             teki.hit(screen,background,jj,y)
             turn = 0    
         if teki.hp <= 0:
-            """
-            jj.tao3(screen,background,y)
-            print("taosita")
-            tesitajj.tao2(screen,background,jj,y)
-            print("tttttt")
-            """
             time.sleep(3)
             field(basho)
 
@@ -576,7 +556,7 @@ def sentou(teki):
             xy = [xxx,yyy]
             xxxyyy.save(xy)
             keikei.save(jj.keikenchi)
-            mt = [jj.maxhp,jj.tuyosa,jj.keikenchi,jj.level]
+            mt = [jj.maxhp,jj.tuyosa,jj.keikenchi,jj.level.jj.zeni]
             status.save(mt)
             exit()
         if pressed_keys[pygame.K_UP] :
@@ -601,24 +581,23 @@ def sentou(teki):
                 if teki.hp <=0:
                     jj.tao3(screen,background,teki,y)
                     levjj = (jj.maxhp,jj.tuyosa)
-                    if jj.keikenchi >= 90 and jj.level == 1:
+                    if jj.keikenchi >= 90 and jj.level == 1 :
                         jj.levelup(screen,background,jj,teki,y)
                         jj.level = 2
-                    elif jj.keikenchi >= 500 and jj.level == 2:
+                    elif jj.keikenchi >= 100 and jj.level == 2:
                         jj.levelup(screen,background,jj,teki,y)
                         jj.level = 3
-                    elif jj.keikenchi >= 1000 and jj.level == 3:
+                    elif jj.keikenchi >= 200 and jj.level == 3:
                         jj.levelup(screen,background,jj,teki,y)
                         jj.level = 4
+                    elif jj.keikenchi >= 300 and jj.level == 4:
+                        jj.levelup(screen,background,jj,teki,y)
+                        jj.level = 5
                     #levelupjj.levelup(jj)
 
                 turn = 1
                 print("$$$")
                 flag1 = 1
-                """
-                tt = font.render("jizou no kougeki",False,(255,255,255))
-                screen.blit(tt,(200,200))
-                """
                 #if teki.hp  <= 0:
                 #    jj.nigeru(screen,background,y)
         elif playerpos == 1:
@@ -635,54 +614,18 @@ def sentou(teki):
             pressed = pygame.key.get_pressed()
             if pressed[K_RETURN]:
                 jj.keikenchi = 0
-                if teki.xxxx == 1:
+                if teki.boss == 1:
                     basho[0] = 400
+                    field(basho)
                 else:
                     print()
                 field(basho)
                 print("!!!")
-            """
-        if teki.hp <= 0:
-            print("dddddddddddddddddddddddddd")
-            screen.blit(background,(0,0))
-            print("AAAAAAAAAAAAA")
-
-            list1.append("tesita wo taosita!")
-            list1.append("")
-            font = pygame.font.Font(None,32)
-            font_height = font.get_linesize()
-            print("CCCCCCCCCCCCCCCC")
-            for text in reversed(list1):
-                screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
-                y += font_height
-
-    
-            print("ssssssssssssssssssssssssssss")
-            #tesitajj.death(jj.keikenchi)
-            #jj.hit(screen,background,teki,y)
-            #jj.levelup(screen,background,teki,y)
-            basho[0] = 400
-            field(basho)
-            time.sleep(10)
-            jj.tao(screen,background,teki,y)
-            field(basho)
-            """
         if jj.hp <= 0:
             basho[0] = 400
             field(basho)
         flag1=1
         
-        """
-        screen.blit(k2,(60,300))
-        screen.blit(b2,(60,350))
-        screen.blit(n2,(60,400))
-        text = font.render("kougeki",False,(255,255,255))
-        screen.blit(text,(60,300))
-        text = font.render("bougyo",False,(255,255,255))
-        screen.blit(text,(60,320))
-
-
-        """
         def kougeki():
             r2 = int(r)
             if r2 >= 7:
@@ -693,10 +636,6 @@ def sentou(teki):
                 damege = tuyosa + 5
         pygame.display.update()
     
-    """ 
-        for x in reversed(list1):
-            y-=font_height
-    """
     
     
     
