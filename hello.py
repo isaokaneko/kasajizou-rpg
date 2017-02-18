@@ -5,4 +5,4 @@ def pu(number):
 pu("22")
 def au(num):
     return num * num
-
+i = su(3)
