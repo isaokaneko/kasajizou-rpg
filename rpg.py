@@ -16,6 +16,20 @@ list1 = []
 y = 0
 x = 0
 xy = []
+class Yakusou:
+    def __init__(self):
+        self.name  = "薬草"
+        self.price = 100
+    def buy(self,money):
+        money = money - self.price  
+
+class Gravia:
+    def __init__(self):
+        self.name = "グラビア"
+        self.price = 100000000
+yakusou = Yakusou()
+gravia = Gravia()
+
 class Tenin:
     def __init__(self):
         self.name = "店員"
@@ -44,6 +58,7 @@ class Tenin:
             y += font_height
     def taosita():
         print()
+tenin = Tenin()
 class Akudaikan:
     def __init__(self):
         self.name = "悪代官"
@@ -376,13 +391,17 @@ def yorozu(teki):
         screen.blit(text,(20,60))
         text = font.render("Lv",False,(255,255,255))
         screen.blit(text,(20,90))
+        text = font.render(str(tenin.name),False,(0,0,0))
+        screen.blit(text,(400,120))
         #text = font.render("経験値",False,(255,255,255))
         #screen.blit(text,(20,100))
         yakusou.price=100
-        text = font.render("薬草     "+ str(yakusou.price),False,(255,255,255))
+        yakusou.name = "薬草"
+        text = font.render(yakusou.name+ str(yakusou.price)+"ゼニー",False,(255,255,255))
         screen.blit(text,(20,300))
         gravia.price=100000000000
-        text = font.render("グラビア "+ str(gravia.price),False,(255,255,255))
+        gravia.name = "グラビア"
+        text = font.render(gravia.name + str(gravia.price)+ "ゼニー",False,(255,255,255))
         screen.blit(text,(20,330))
         text = font.render("店を出る",False,(255,255,255))
         screen.blit(text,(20,360))
