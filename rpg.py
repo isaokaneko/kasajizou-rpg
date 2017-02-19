@@ -99,6 +99,15 @@ class Jizouclass:
         self.level = 1
         self.zeni =  0
 
+    def buy(self,screen,background1,item,y):
+        font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
+        font_height = font.get_linesize()
+        list1.append(item.name + "を買った ")
+        for text in reversed(list1):
+            screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
+            y += font_height
+            print(text+("AAAAAAA"))
+            print(list1)
 
     def hit(self,screen,background1,enemy,y):
         f =  int((5 * random.random()))
@@ -391,6 +400,8 @@ def yorozu(teki):
         screen.blit(text,(20,60))
         text = font.render("Lv",False,(255,255,255))
         screen.blit(text,(20,90))
+        text = font.render(str(jj.zeni) ,False,(255,255,255))
+        screen.blit(text,(20,120))
         text = font.render(str(tenin.name),False,(0,0,0))
         screen.blit(text,(400,120))
         #text = font.render("経験値",False,(255,255,255))
@@ -444,36 +455,16 @@ def yorozu(teki):
             pressed = pygame.key.get_pressed()
             if pressed[K_RETURN]:
                 #time.sleep(1)
-                jj.hit(screen,background,teki,y)
-                if teki.hp <=0:
-                    jj.tao3(screen,background,teki,y)
-                    levjj = (jj.maxhp,jj.tuyosa)
-                    if jj.keikenchi >= 90 and jj.level == 1 :
-                        jj.levelup(screen,background,jj,teki,y)
-                        jj.level = 2
-                    elif jj.keikenchi >= 100 and jj.level == 2:
-                        jj.levelup(screen,background,jj,teki,y)
-                        jj.level = 3
-                    elif jj.keikenchi >= 200 and jj.level == 3:
-                        jj.levelup(screen,background,jj,teki,y)
-                        jj.level = 4
-                    elif jj.keikenchi >= 300 and jj.level == 4:
-                        jj.levelup(screen,background,jj,teki,y)
-                        jj.level = 5
-                    #levelupjj.levelup(jj)
-
-                turn = 1
-                print("$$$")
-                flag1 = 1
+                jj.zeni = jj.zeni - yakusou.price
+                jj.buy(screen,background,yakusou,y)
                 #    jj.nigeru(screen,background,y)
         elif playerpos == 1:
             pygame.time.wait(100)
             screen.blit(waku,(20,330 ))
             pressed = pygame.key.get_pressed()
             if pressed[K_RETURN]:
-                jj.bougyo(screen,background,y)
-                turn = 1
-                print("!!!")
+                jj.zeni = jj.zeni - gravia.price
+                jj.buy(screen,background,gravia,y)
         elif playerpos == 2:
             pygame.time.wait(100)
             screen.blit(waku,(20,360  ))
