@@ -16,9 +16,9 @@ list1 = []
 y = 0
 x = 0
 xy = []
-class Yakusou:
-    def __init__(self):
-        self.name  = "薬草"
+class Item:
+    def __init__(self,name):
+        self.name  = name
         self.price = 100
     def buy(self,money):
         money = money - self.price  
@@ -27,8 +27,10 @@ class Gravia:
     def __init__(self):
         self.name = "グラビア"
         self.price = 100000000
-yakusou = Yakusou()
+botamoti = Item("ぼたもち")
+ohagi = Item("おはぎ")
 gravia = Gravia()
+
 
 class Tenin:
     def __init__(self):
@@ -102,7 +104,12 @@ class Jizouclass:
     def buy(self,screen,background1,item,y):
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         font_height = font.get_linesize()
-        list1.append(item.name + "を買った ")
+        if jj.zeni > item.price:
+            list1.append(item.name + "を買った ")
+        else:
+            list1.append(item.name + "を買えなかった")
+            
+
         for text in reversed(list1):
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
@@ -406,13 +413,9 @@ def yorozu(teki):
         screen.blit(text,(400,120))
         #text = font.render("経験値",False,(255,255,255))
         #screen.blit(text,(20,100))
-        yakusou.price=100
-        yakusou.name = "薬草"
-        text = font.render(yakusou.name+ str(yakusou.price)+"ゼニー",False,(255,255,255))
+        text = font.render(botamoti.name+ str(botamoti.price)+"ゼニー",False,(255,255,255))
         screen.blit(text,(20,300))
-        gravia.price=100000000000
-        gravia.name = "グラビア"
-        text = font.render(gravia.name + str(gravia.price)+ "ゼニー",False,(255,255,255))
+        text = font.render(ohagi.name + str(ohagi.price)+ "ゼニー",False,(255,255,255))
         screen.blit(text,(20,330))
         text = font.render("店を出る",False,(255,255,255))
         screen.blit(text,(20,360))
@@ -434,7 +437,7 @@ def yorozu(teki):
         if pressed_keys[pygame.K_ESCAPE]:
             xy = [xxx,yyy]
             xxxyyy.save(xy)
-            mt = [jj.maxhp,jj.tuyosa,jj.keikenchi,jj.level.jj.zeni]
+            mt = [jj.maxhp,jj.tuyosa,jj.keikenchi,jj.level,jj.zeni]
             status.save(mt)
             exit()
         if pressed_keys[pygame.K_UP] :
@@ -455,16 +458,26 @@ def yorozu(teki):
             pressed = pygame.key.get_pressed()
             if pressed[K_RETURN]:
                 #time.sleep(1)
-                jj.zeni = jj.zeni - yakusou.price
-                jj.buy(screen,background,yakusou,y)
+                jj.zeni = 1000000000
+                if jj.zeni < botamoti.price:
+                    jj.buy(screen,background,botamoti,y)
+                else:
+                    jj.zeni = jj.zeni - botamoti.price
+                    jj.buy(screen,background,botamoti,y)
+
+
+
                 #    jj.nigeru(screen,background,y)
         elif playerpos == 1:
             pygame.time.wait(100)
             screen.blit(waku,(20,330 ))
             pressed = pygame.key.get_pressed()
             if pressed[K_RETURN]:
-                jj.zeni = jj.zeni - gravia.price
-                jj.buy(screen,background,gravia,y)
+                if jj.zeni < ohagi.price:
+                    jj.buy(screen,background,ohagi,y)
+                else:
+                    jj.zeni = jj.zeni - ohagi.price
+                    jj.buy(screen,background,ohagi,y)
         elif playerpos == 2:
             pygame.time.wait(100)
             screen.blit(waku,(20,360  ))
@@ -472,10 +485,11 @@ def yorozu(teki):
             if pressed[K_RETURN]:
                 jj.keikenchi = 0
                 if teki.boss == 1:
-                    basho[1] = 400
+                    basho[1] = 600
                     field(basho)
                 else:
                     print()
+
                 field(basho)
                 print("!!!")
         if jj.hp <= 0:
@@ -579,11 +593,9 @@ def field(basho):
             s = s + 1
         else:
             print("")
-            """
-        if yyy < 100:
+        if xxx > 500:
             aku = Akudaikan()
             sentou(aku)
-            """
         if yyy >400:
             basho[0] = xxx + move_x
             basho[1] = yyy + move_y
@@ -743,7 +755,7 @@ def sentou(teki):
         if pressed_keys[pygame.K_ESCAPE]:
             xy = [xxx,yyy]
             xxxyyy.save(xy)
-            mt = [jj.maxhp,jj.tuyosa,jj.keikenchi,jj.level.jj.zeni]
+            mt = [jj.maxhp,jj.tuyosa,jj.keikenchi,jj.level,jj.zeni]
             status.save(mt)
             exit()
         if pressed_keys[pygame.K_UP] :
@@ -801,7 +813,7 @@ def sentou(teki):
             if pressed[K_RETURN]:
                 jj.keikenchi = 0
                 if teki.boss == 1:
-                    basho[0] = 200
+                    basho[0] = 500
                     basho[1] = 200
                     field(basho)
                     print("jjjj")
