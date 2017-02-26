@@ -61,14 +61,14 @@ class Akudaikan:
         enemy.hp -=  (self.tuyosa + f )
         #screen.blit(background1,(0,0))
         #time.sleep(1)
-        list1.append("悪代官の攻撃")
+        self.list1.append("悪代官の攻撃")
         a = f + self.tuyosa
 
-        list1.append(str(a) + "のダメージ")
-        list1.append("")
+        self.list1.append(str(a) + "のダメージ")
+        self.list1.append("")
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         font_height = font.get_linesize()
-        for text in reversed(list1):
+        for text in reversed(self.list1):
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
     def taosita():
@@ -81,99 +81,98 @@ class Jizouclass:
         self.tuyosa =8
         self.keikenchi=0
         self.list1 = []
+        self.list2 = []
         self.tttt = 1
         self.level = 1
         self.zeni =  0
         self.botamoti = 0
         self.ohagi = 0
 
-    def buy(self,screen,background1,item,y):
-        list1 = []
+    def nobuy(self,screen,background1,item,y):
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         font_height = font.get_linesize()
-        if jj.zeni > item.price:
-            list1.append(item.name + "を買った ")
-            if item.name == "ぼたもち":
-                jj.botamoti = jj.botamoti + 1
-            else: 
-                pass
-            if item.name == "おはぎ":
-                jj.ohagi = jj.ohagi + 1
-            else: 
-                pass
-        else:
-            list1.append(item.name + "を買えなかった")
-            
+        if  jj.zeni <= 0:
+            self.list2.append(item.name + "を買えなかった")
 
-        for text in reversed(list1):
+        for text in reversed(self.list2):
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
             print(text+("AAAAAAA"))
-            print(list1)
+            print(self.list2)
+
+
+    def buy(self,screen,background1,item,y):
+        font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
+        font_height = font.get_linesize()
+        if item.name == "ぼたもち" and jj.zeni >= botamoti.price:
+            jj.botamoti = jj.botamoti + 1
+            jj.zeni = jj.zeni - botamoti.price
+            self.list2.append(item.name + "を買った ")
+        elif item.name == "おはぎ" and jj.zeni >= item.price: 
+            jj.botamoti = jj.ohagi + 1
+            jj.zeni = jj.zeni - ohagi.price
+            self.list2.append(item.name + "を買った ")
+
+        for text in reversed(self.list2):
+            screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
+            y += font_height
+            print(text+("AAAAAAA"))
+            print(self.list2)
 
     def hit(self,screen,background1,enemy,y):
-        list2 =[]
         f =  int((5 * random.random()))
         enemy.hp -=  (self.tuyosa + f )
         #screen.blit(background1,(0,0))
-        list2.append("地蔵の攻撃")
+        self.list1.append("地蔵の攻撃")
         a = f + self.tuyosa
-        list2.append(str(a) + "のダメージ")
-        list2.append("")
+        self.list1.append(str(a) + "のダメージ")
+        self.list1.append("")
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         font_height = font.get_linesize()
-        for text in reversed(list1):
+        for text in reversed(self.list1):
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
             print(text+("AAAAAAA"))
-            print(list1)
 
             print(text+"BBBBBBB")
-            print(list1)
 
 
     def bougyo(self,screen,background1,y):
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         font_height = font.get_linesize()
         screen.blit(background1,(0,0))
-        print(list1)
+        print(self.list1)
         print("CCC")
-        list1.append("地蔵の防御")
+        self.list1.append("地蔵の防御")
         pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
-        for text in reversed(list1):
+        for text in reversed(self.list1):
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
-        return list1
+        return self.list1
         #t = 1
     def tao3(self,screen,background1,teki,y):
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         font_height = font.get_linesize()
         #screen.blit(background1,(0,0))
-        print(list1)
         print("CCC")
         pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
-        list1.append(teki.name + "を倒した ")
+        self.list1.append(teki.name + "を倒した ")
         self.zeni = self.zeni + teki.zeni
-        list1.append(str(self.zeni)+"ゼニーを手に入れた")
+        self.list1.append(str(teki.zeni)+"ゼニーを手に入れた")
         self.keikenchi = self.keikenchi + teki.keikenchiout
-        list1.append(str(self.keikenchi)+"経験値を手に入れた")
+        self.list1.append(str(teki.keikenchiout)+"経験値を手に入れた")
 
-        for text in reversed(list1):
+        for text in reversed(self.list1):
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
         if teki.dead == 1:
             time.sleep(2)
             field(basho)
-
         time.sleep(2)
-        return list1
-
-        
-        #field(basho)
-    def del1(self,list1):
-        del list1[:]
-        print(list1)
-
+        #return jj.list1
+    def del1(self):
+        del self.list1[:]
+        print(self.list1)
     def levelup(self,screen,background1,jizou2,enemy,y):
         if jizou2.keikenchi >= 60 and jizou2.level == 1 and jizou2.keikenchi <=99:
 
@@ -181,11 +180,11 @@ class Jizouclass:
             jizou2.tuyosa = jizou2.tuyosa +  int((3 * random.random())) + 5
             screen.blit(background1,(0,0))
             pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
-            list1.append("地蔵レベルアップ２")
+            self.list1.append("地蔵レベルアップ２")
             jizou2.level=2
             font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
             font_height = font.get_linesize()
-            for text in reversed(list1):
+            for text in reversed(self.list1):
                 screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
                 y += font_height
         elif jizou2.keikenchi >= 100 and jizou2.level == 2 and jizou2.keikenchi <= 199:
@@ -193,10 +192,10 @@ class Jizouclass:
             jizou2.tuyosa = jizou2.tuyosa +  int((3 * random.random())) + 10
             screen.blit(background1,(0,0))
             pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
-            list1.append("地蔵レベルアップ3")
+            self.list1.append("地蔵レベルアップ3")
             font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
             font_height = font.get_linesize()
-            for text in reversed(list1):
+            for text in reversed(self.list1):
                 screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
                 y += font_height
             jizou2.level=3
@@ -205,10 +204,10 @@ class Jizouclass:
             jizou2.tuyosa = jizou2.tuyosa +  int((3 * random.random())) + 20
             screen.blit(background1,(0,0))
             pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
-            list1.append("地蔵レベルアップ4")
+            self.list1.append("地蔵レベルアップ4")
             font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
             font_height = font.get_linesize()
-            for text in reversed(list1):
+            for text in reversed(self.list1):
                 screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
                 y += font_height
             jizou2.level=4
@@ -217,10 +216,10 @@ class Jizouclass:
             jizou2.tuyosa = jizou2.tuyosa +  int((3 * random.random())) + 30
             screen.blit(background1,(0,0))
             pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
-            list1.append("地蔵レベルアップ5")
+            self.list1.append("地蔵レベルアップ5")
             font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
             font_height = font.get_linesize()
-            for text in reversed(list1):
+            for text in reversed(self.list1):
                 screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
                 y += font_height
             jizou2.level=5
@@ -236,7 +235,8 @@ class Tesita:
         self.job=2
         self.boss=0
         self.dead=0
-        self.zeni=100
+        self.zeni=500
+        self.list1 = []
     def hit(self,screen,background1,enemy,y):
         pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
         f =  int((1 * random.random()))
@@ -244,14 +244,14 @@ class Tesita:
         screen.blit(background1,(0,0))
         pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
         #time.sleep(1)
-        list1.append(self.name + "の攻撃")
+        self.list1.append(self.name + "の攻撃")
         a = f + self.tuyosa
 
-        list1.append(str(a) + "のダメージ")
-        list1.append("")
+        self.list1.append(str(a) + "のダメージ")
+        self.list1.append("")
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         font_height = font.get_linesize()
-        for text in reversed(list1):
+        for text in reversed(self.list1):
             screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
             y += font_height
     def tao2(self,screen,background1,jj,y):
@@ -259,7 +259,7 @@ class Tesita:
         font_height = font.get_linesize()
         screen.blit(background1,(0,0))
         pygame.draw.rect(screen,(0,0,0),(170,100,220,270))
-        print(list1)
+        print(self.list1)
         print("CCC")
         print("CCC")
         list1.append("手下を倒した")
@@ -458,22 +458,20 @@ def yorozu(teki):
             pressed = pygame.key.get_pressed()
             if pressed[K_RETURN]:
                 #time.sleep(1)
-                if jj.zeni < botamoti.price:
+                if jj.zeni >= botamoti.price:
                     jj.buy(screen,background,botamoti,y)
-                else:
-                    jj.zeni = jj.zeni - botamoti.price
-                    jj.buy(screen,background,botamoti,y)
+                elif jj.zeni == 0:
+                    jj.nobuy(screen,background,botamoti,y)
                 #    jj.nigeru(screen,background,y)
         elif playerpos == 1:
             pygame.time.wait(100)
             screen.blit(waku,(20,330 ))
             pressed = pygame.key.get_pressed()
             if pressed[K_RETURN]:
-                if jj.zeni < ohagi.price:
+                if jj.zeni >= ohagi.price:
                     jj.buy(screen,background,ohagi,y)
-                else:
-                    jj.zeni = jj.zeni - ohagi.price
-                    jj.buy(screen,background,ohagi,y)
+                elif jj.zeni == 0:
+                    jj.nobuy(screen,background,ohagi,y)
         elif playerpos == 2:
             pygame.time.wait(100)
             screen.blit(waku,(20,360 ))
@@ -627,8 +625,12 @@ def field(basho):
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         text = font.render('Reset', False, (55,205,55))
         screen.blit(text,(420,20))
-        text = font.render("ゼニー"+str(jj.zeni), False, (225,205,55))
-        screen.blit(text,(220,20))
+        text = font.render(str(jj.zeni)+"ゼニー",False,(55,255,44))
+        screen.blit(text,(220,40))
+        text = font.render(str(jj.botamoti), False, (225,205,55))
+        screen.blit(text,(220,60))
+        text = font.render(str(jj.ohagi), False, (225,205,55))
+        screen.blit(text,(220,80))
         text = font.render("万屋", False, (225,205,55))
         screen.blit(text,(220,420))
         pressed_mouse = pygame.mouse.get_pressed()
@@ -656,6 +658,7 @@ background_image_filename = 'j.png'
 basho = []
 basho = xy
 def sentou(teki):
+    list1 =[]
     time.sleep(1)
     print(teki)
     filename = []
