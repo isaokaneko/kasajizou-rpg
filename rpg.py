@@ -12,7 +12,7 @@ background_image_filename = 'j.png'
 basho = []
 mtt = []
 mt = []
-list1 = []
+#list1 = []
 y = 0
 x = 0
 xy = []
@@ -27,7 +27,7 @@ class Gravia:
     def __init__(self):
         self.name = "グラビア"
         self.price = 100000000
-botamoti = Item("ぼたもち")
+botamoti = Item("ぼたもち",)
 ohagi = Item("おはぎ")
 gravia = Gravia()
 
@@ -43,23 +43,6 @@ class Tenin:
         self.boss =1
         self.dead = 0
         self.zeni = 1000
-    def hit(self,screen,background1,enemy,y):
-        f =  int((1 * random.random()))
-        enemy.hp -=  (self.tuyosa + f )
-        #screen.blit(background1,(0,0))
-        #time.sleep(1)
-        list1.append("悪代官の攻撃")
-        a = f + self.tuyosa
-
-        list1.append(str(a) + "のダメージ")
-        list1.append("")
-        font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
-        font_height = font.get_linesize()
-        for text in reversed(list1):
-            screen.blit(font.render(text,True,(255,255,255)),(200,300-y))
-            y += font_height
-    def taosita():
-        print()
 tenin = Tenin()
 class Akudaikan:
     def __init__(self):
@@ -72,6 +55,7 @@ class Akudaikan:
         self.boss=1
         self.dead = 0
         self.zeni = 1000
+        self.list1 = []
     def hit(self,screen,background1,enemy,y):
         f =  int((1 * random.random()))
         enemy.hp -=  (self.tuyosa + f )
@@ -100,12 +84,23 @@ class Jizouclass:
         self.tttt = 1
         self.level = 1
         self.zeni =  0
+        self.botamoti = 0
+        self.ohagi = 0
 
     def buy(self,screen,background1,item,y):
+        list1 = []
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         font_height = font.get_linesize()
         if jj.zeni > item.price:
             list1.append(item.name + "を買った ")
+            if item.name == "ぼたもち":
+                jj.botamoti = jj.botamoti + 1
+            else: 
+                pass
+            if item.name == "おはぎ":
+                jj.ohagi = jj.ohagi + 1
+            else: 
+                pass
         else:
             list1.append(item.name + "を買えなかった")
             
@@ -117,13 +112,14 @@ class Jizouclass:
             print(list1)
 
     def hit(self,screen,background1,enemy,y):
+        list2 =[]
         f =  int((5 * random.random()))
         enemy.hp -=  (self.tuyosa + f )
         #screen.blit(background1,(0,0))
-        list1.append("地蔵の攻撃")
+        list2.append("地蔵の攻撃")
         a = f + self.tuyosa
-        list1.append(str(a) + "のダメージ")
-        list1.append("")
+        list2.append(str(a) + "のダメージ")
+        list2.append("")
         font = pygame.font.Font("VL-Gothic-Regular.ttf",32)
         font_height = font.get_linesize()
         for text in reversed(list1):
@@ -312,6 +308,7 @@ class reset():
         jj.tuyosa = 10
         jj.level = 1
         jj.zeni =0
+        
         xy = xxxyyy.load
 
 status = Status()
@@ -335,10 +332,12 @@ jj.keikenchi= mtt[2]
 jj.level= mtt[3]
 jj.zeni= mtt[4]
 def yorozu(teki):
+    list1= []
     time.sleep(1)
     print(teki)
     filename = []
     flag = 0
+    yorozuyafile="yorozuya.png"
     filename="ojizousan2.png"
     filename9="waku2.png"
     filename10="back.png"
@@ -354,6 +353,7 @@ def yorozu(teki):
     waku = pygame.image.load(filename9).convert_alpha()
     back = pygame.image.load(filename9).convert_alpha()
     akuimage = pygame.image.load(filename13).convert_alpha()
+    yorozuyapng = pygame.image.load(yorozuyafile).convert_alpha()
     tenin_image = pygame.image.load(filename14).convert_alpha()
     tesita_x,tesita_y = 400, 200
     move_x,move_y = 0, 0
@@ -458,15 +458,11 @@ def yorozu(teki):
             pressed = pygame.key.get_pressed()
             if pressed[K_RETURN]:
                 #time.sleep(1)
-                jj.zeni = 1000000000
                 if jj.zeni < botamoti.price:
                     jj.buy(screen,background,botamoti,y)
                 else:
                     jj.zeni = jj.zeni - botamoti.price
                     jj.buy(screen,background,botamoti,y)
-
-
-
                 #    jj.nigeru(screen,background,y)
         elif playerpos == 1:
             pygame.time.wait(100)
@@ -480,18 +476,14 @@ def yorozu(teki):
                     jj.buy(screen,background,ohagi,y)
         elif playerpos == 2:
             pygame.time.wait(100)
-            screen.blit(waku,(20,360  ))
+            screen.blit(waku,(20,360 ))
             pressed = pygame.key.get_pressed()
             if pressed[K_RETURN]:
-                jj.keikenchi = 0
-                if teki.boss == 1:
-                    basho[1] = 600
-                    field(basho)
-                else:
-                    print()
-
+                basho[1] = 400
                 field(basho)
+            else:
                 print("!!!")
+        """
         if jj.hp <= 0:
             basho[0] = 400
             field(basho)
@@ -505,6 +497,7 @@ def yorozu(teki):
                 damege = tuyosa + 3
             elif r2 >= 0:
                 damege = tuyosa + 5
+                """
         pygame.display.update()
     
     
@@ -533,10 +526,10 @@ def field(basho):
     background = pygame.image.load(background_image_filename).convert()
     jizou = pygame.image.load(filename).convert_alpha()
 
-    s = 0
+    ssss = 0
 
     move_x,move_y = 0, 0
-    r  =  random.random()*10
+    randomteki  =  random.random()*10
     xxx = basho[0]
     yyy = basho[1]
     tttt = 1
@@ -590,7 +583,7 @@ def field(basho):
         print(move_x)
         if move_x == 0.1 or  move_y == 0.1 or move_x == -0.1 or move_y == -0.1:
         #if move_x >= 1 or  y >= 1 or y <= 1 or x <= 1 :
-            s = s + 1
+            ssss = ssss + 1
         else:
             print("")
         if xxx > 500:
@@ -613,7 +606,7 @@ def field(basho):
 
 
 
-        if s == (10 + int(r*100)):
+        if ssss == (10 + int(randomteki*100)):
         #if s == 2:
             #t = 1
             basho[0] = xxx + move_x
@@ -636,6 +629,8 @@ def field(basho):
         screen.blit(text,(420,20))
         text = font.render("ゼニー"+str(jj.zeni), False, (225,205,55))
         screen.blit(text,(220,20))
+        text = font.render("万屋", False, (225,205,55))
+        screen.blit(text,(220,420))
         pressed_mouse = pygame.mouse.get_pressed()
 
         mpos = pygame.mouse.get_pos()
@@ -648,6 +643,7 @@ def field(basho):
             jj.maxhp = 20
             jj.tuyosa = 10       
             jj.level=1
+            jj.zeni=0
             xxx = 10
             yyy = 180
         
@@ -733,8 +729,10 @@ def sentou(teki):
         screen.blit(text,(20,300))
         text = font.render("防御",False,(255,255,255))
         screen.blit(text,(20,330))
-        text = font.render("逃げる",False,(255,255,255))
+        text = font.render("道具",False,(255,255,255))
         screen.blit(text,(20,360))
+        text = font.render("逃げる",False,(255,255,255))
+        screen.blit(text,(20,390))
         #text = font.render("経験値",False,(255,255,255))
         #screen.blit(text,(20,100))
         #screen.blit(kou,(60,300))
@@ -764,12 +762,12 @@ def sentou(teki):
             playerpos +=1
                     
         #screen.blit(background2[playerpos],(20,i*10))
-        #screen[playerpos]=background2[playerpos]
+        #screen[playerpos]=background2[6layerpos]
         #playerpos = 2
         #screen.blit(waku,(20,playerpos*40))
         #screen.blit(background2[playerpos],(20,playerpos*40))
         #playerpos = playerpos - 1
-        playerpos %= 3
+        playerpos %= 4
         if playerpos == 0:
             pygame.time.wait(100)
             screen.blit(waku,(20,300 ))
@@ -811,16 +809,17 @@ def sentou(teki):
             screen.blit(waku,(20,360  ))
             pressed = pygame.key.get_pressed()
             if pressed[K_RETURN]:
-                jj.keikenchi = 0
-                if teki.boss == 1:
-                    basho[0] = 500
-                    basho[1] = 200
-                    field(basho)
-                    print("jjjj")
-                else:
-                    print()
+                text = font.render("ばたもち",False,(255,255,255))
+                screen.blit(text,(120,490))
+                text = font.render("おはぎ",False,(255,255,255))
+                screen.blit(text,(120,520))
+        elif playerpos == 3:
+            pygame.time.wait(100)
+            screen.blit(waku,(20,390  ))
+            pressed = pygame.key.get_pressed()
+            if pressed[K_RETURN]:
                 field(basho)
-                print("!!!")
+
         if jj.hp <= 0:
             basho[0] = 400
             field(basho)
